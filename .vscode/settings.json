@@ -1,0 +1,14 @@
+{
+	"go.testEnvVars": {
+		"PATH": "/opt/ros/jazzy/bin:/usr/local/go/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+		"AMENT_PREFIX_PATH": "/opt/ros/jazzy",
+		"ROS_PYTHON_VERSION": "3",
+		"RMW_IMPLEMENTATION": "rmw_cyclonedds_cpp",
+		"PYTHONPATH": "/opt/ros/jazzy/lib/python3.12/site-packages",
+		"LD_LIBRARY_PATH": "/opt/ros/jazzy/lib/x86_64-linux-gnu:/opt/ros/jazzy/lib",
+		"CGO_ENABLED": "1",
+	},
+	"go.testFlags": [
+		"-asan",
+	]
+}
