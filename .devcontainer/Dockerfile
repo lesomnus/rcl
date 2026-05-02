@@ -32,7 +32,8 @@ ENV PATH=${ROS_ROOT}/bin:${PATH} \
 	ROS_AUTOMATIC_DISCOVERY_RANGE=SUBNET \
 	AMENT_PREFIX_PATH=${ROS_ROOT} \
 	PYTHONPATH=${ROS_ROOT}/lib/python${PYTHON_VERSION}/site-packages:/usr/lib/python3/dist-packages \
-	RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
+	RMW_IMPLEMENTATION=rmw_cyclonedds_cpp \
+	LD_LIBRARY_PATH=/opt/ros/jazzy/lib/x86_64-linux-gnu:/opt/ros/jazzy/lib
 
 
 
