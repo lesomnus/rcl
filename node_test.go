@@ -13,16 +13,22 @@ import (
 	"github.com/lesomnus/rcl/internal/x"
 )
 
+func NewNode(t *testing.T) *rcl.Node {
+	r, err := rcl.NewRuntime()
+	x.NoError(t, err)
+	t.Cleanup(func() { r.Close() })
+
+	node, err := r.NewNode("foo", "bar")
+	x.NoError(t, err)
+	t.Cleanup(func() { node.Close() })
+
+	return node
+}
+
 func TestNode(t *testing.T) {
 	asan.NoLeak(t)
 
-	r, err := rcl.NewRuntime()
-	x.NoError(t, err)
-	defer r.Close()
-
-	node, err := r.NewNode("rclgo_name", "rclgo_ns")
-	x.NoError(t, err)
-	defer node.Close()
+	_ = NewNode(t)
 
 	time.Sleep(100 * time.Millisecond)
 
@@ -32,7 +38,7 @@ func TestNode(t *testing.T) {
 	scanner := bufio.NewScanner(bytes.NewReader(output))
 	for scanner.Scan() {
 		line := strings.TrimSpace(scanner.Text())
-		if line == "/rclgo_ns/rclgo_name" {
+		if line == "/bar/foo" {
 			return
 		}
 	}

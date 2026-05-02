@@ -58,3 +58,14 @@ type MessageInfo struct {
 	ReceivedTimestamp time.Time
 	FromIntraProcess  bool
 }
+
+type ServiceInfo struct {
+	SourceTimestamp   time.Time
+	ReceivedTimestamp time.Time
+	RequestId         RequestId
+}
+
+type RequestId struct {
+	WriterGuid     [16]int8
+	SequenceNumber int64
+}

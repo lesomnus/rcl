@@ -9,7 +9,7 @@ func (n *Node) NewSubscription(topic string, typename Typename, opts ...Option) 
 }
 
 func (s RawSubscription) Recv() ([]byte, *MessageInfo, error) {
-	return nil, nil, nil
+	return nil, nil, RclError(CodeSubscriptionTakeFailed)
 }
 
 func (s RawSubscription) Close() error {

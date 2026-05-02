@@ -70,15 +70,16 @@ func (s RawSubscription) Recv() ([]byte, *MessageInfo, error) {
 	defer buf.Close()
 
 	info := C.rmw_get_zero_initialized_message_info()
-	if rc := C.rcl_take_serialized_message(s.v, buf.v, &info, nil); rc != C.RCL_RET_OK {
+	switch rc := C.rcl_take_serialized_message(s.v, buf.v, &info, nil); rc {
+	case C.RCL_RET_OK:
+		return buf.ToSlice(), &MessageInfo{
+			SourceTimestamp:   time.Unix(0, int64(info.source_timestamp)),
+			ReceivedTimestamp: time.Unix(0, int64(info.received_timestamp)),
+			FromIntraProcess:  bool(info.from_intra_process),
+		}, nil
+	default:
 		return nil, nil, RclError(rc)
 	}
-
-	return buf.ToSlice(), &MessageInfo{
-		SourceTimestamp:   time.Unix(0, int64(info.source_timestamp)),
-		ReceivedTimestamp: time.Unix(0, int64(info.received_timestamp)),
-		FromIntraProcess:  bool(info.from_intra_process),
-	}, nil
 }
 
 func (s *RawSubscription) Close() (err error) {

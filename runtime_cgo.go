@@ -65,6 +65,14 @@ func (b RuntimeBuilder) Build(args ...string) (*Runtime, error) {
 	}, nil
 }
 
+func (r *Runtime) Domain() int {
+	var v C.size_t
+	if rc := C.rcl_context_get_domain_id(r.context, &v); rc != C.RCL_RET_OK {
+		return -1
+	}
+	return int(v)
+}
+
 func (r *Runtime) Close() error {
 	if r.context == nil {
 		return nil

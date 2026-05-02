@@ -11,6 +11,10 @@ func (b RuntimeBuilder) Build(args ...string) (*Runtime, error) {
 	return &Runtime{allocator: b.Allocator}, nil
 }
 
+func (r *Runtime) Domain() int {
+	return 0
+}
+
 func (r *Runtime) Close() error {
 	return nil
 }

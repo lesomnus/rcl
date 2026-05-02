@@ -29,13 +29,7 @@ func TestSubscription(t *testing.T) {
 	t.Run("tick with no message", func(t *testing.T) {
 		asan.NoLeak(t)
 
-		r, err := rcl.NewRuntime()
-		x.NoError(t, err)
-		defer r.Close()
-
-		node, err := r.NewNode("foo", "bar")
-		x.NoError(t, err)
-		defer node.Close()
+		node := NewNode(t)
 
 		args := []Args{}
 		sub, err := rcl.Subscribe(node, Topic, Type, func(v *Point, info *rcl.MessageInfo, err error) {
@@ -47,21 +41,12 @@ func TestSubscription(t *testing.T) {
 		sub.Tick(0)
 		sub.Tick(0)
 		sub.Tick(0)
-		x.Len(t, args, 3)
-		x.Eq(t, Args{nil, rcl.RclError(rcl.CodeSubscriptionTakeFailed)}, args[0])
-		x.Eq(t, Args{nil, rcl.RclError(rcl.CodeSubscriptionTakeFailed)}, args[1])
-		x.Eq(t, Args{nil, rcl.RclError(rcl.CodeSubscriptionTakeFailed)}, args[2])
+		x.Len(t, args, 0)
 	})
 	t.Run("tick with a message", func(t *testing.T) {
 		asan.NoLeak(t)
 
-		r, err := rcl.NewRuntime()
-		x.NoError(t, err)
-		defer r.Close()
-
-		node, err := r.NewNode("foo", "bar")
-		x.NoError(t, err)
-		defer node.Close()
+		node := NewNode(t)
 
 		args := []Args{}
 		sub, err := rcl.Subscribe(node, Topic, Type, func(v *Point, info *rcl.MessageInfo, err error) {

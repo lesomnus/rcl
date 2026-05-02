@@ -18,13 +18,7 @@ func TestPublisher(t *testing.T) {
 	const Topic = "/rclgo/test/publisher"
 	const Type = "geometry_msgs/msg/Point"
 
-	r, err := rcl.NewRuntime()
-	x.NoError(t, err)
-	defer r.Close()
-
-	node, err := r.NewNode("foo", "bar")
-	x.NoError(t, err)
-	defer node.Close()
+	node := NewNode(t)
 
 	type Point struct {
 		X float64

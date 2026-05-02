@@ -5,6 +5,7 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
 	rm -rf /etc/apt/apt.conf.d/docker-clean \
 	&& apt update \
 	&& apt-get install --yes --no-install-recommends \
+		ros-jazzy-example-interfaces \
 		ros-jazzy-rmw-cyclonedds-cpp \
 		zsh
 

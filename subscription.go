@@ -27,7 +27,9 @@ func Subscribe[T any](n *Node, topic string, typename Typename, f func(v *T, inf
 func (s subscription[T]) Tick(int) {
 	data, info, err := s.r.Recv()
 	if err != nil {
-		s.f(nil, nil, err)
+		if Code(err) != CodeSubscriptionTakeFailed {
+			s.f(nil, nil, err)
+		}
 		return
 	}
 
